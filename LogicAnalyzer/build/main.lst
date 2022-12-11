@@ -1,0 +1,501 @@
+ARM GAS  /tmp/ccLf2xvP.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.HSE_168MHz,"ax",%progbits
+  18              		.align	1
+  19              		.global	HSE_168MHz
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	HSE_168MHz:
+  27              	.LVL0:
+  28              	.LFB126:
+  29              		.file 1 "Core/Src/main.c"
+   1:Core/Src/main.c **** /*
+   2:Core/Src/main.c **** clear && st-flash erase && st-flash --reset write build/1st_tstPrj.bin 0x8000000
+   3:Core/Src/main.c **** */
+   4:Core/Src/main.c **** #include <stdio.h>
+   5:Core/Src/main.c **** #include <string.h>
+   6:Core/Src/main.c **** #include <stdint.h>
+   7:Core/Src/main.c **** #include <stdlib.h>
+   8:Core/Src/main.c **** 
+   9:Core/Src/main.c **** #include "main.h"
+  10:Core/Src/main.c **** #include "stm32f4xx.h"
+  11:Core/Src/main.c **** #include "stm32f4xx_rcc.h"
+  12:Core/Src/main.c **** #include "stm32f4xx_gpio.h"
+  13:Core/Src/main.c **** #include "delay.h"
+  14:Core/Src/main.c **** #include "signal_led.h"
+  15:Core/Src/main.c **** 
+  16:Core/Src/main.c **** int HSE_168MHz(uint32_t Signal_LED)
+  17:Core/Src/main.c **** {
+  30              		.loc 1 17 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  18:Core/Src/main.c **** 	if (!Signal_LED) return -1;
+  34              		.loc 1 18 2 view .LVU1
+  35              		.loc 1 18 5 is_stmt 0 view .LVU2
+  36 0000 0028     		cmp	r0, #0
+  37 0002 77D0     		beq	.L12
+  17:Core/Src/main.c **** 	if (!Signal_LED) return -1;
+  38              		.loc 1 17 1 view .LVU3
+  39 0004 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/ccLf2xvP.s 			page 2
+
+
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 16
+  42              		.cfi_offset 4, -16
+  43              		.cfi_offset 5, -12
+  44              		.cfi_offset 6, -8
+  45              		.cfi_offset 14, -4
+  46 0006 82B0     		sub	sp, sp, #8
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 24
+  49 0008 0546     		mov	r5, r0
+  19:Core/Src/main.c **** 	unsigned wait_count = 5;
+  50              		.loc 1 19 2 is_stmt 1 view .LVU4
+  51              	.LVL1:
+  20:Core/Src/main.c **** 
+  21:Core/Src/main.c **** 	#define PLL_M	8
+  22:Core/Src/main.c **** 	#define PLL_N	336
+  23:Core/Src/main.c **** 	#define PLL_P	2
+  24:Core/Src/main.c **** 	#define PLL_Q	7
+  25:Core/Src/main.c **** 
+  26:Core/Src/main.c **** 	ErrorStatus HSEStartUpStatus;
+  52              		.loc 1 26 2 view .LVU5
+  27:Core/Src/main.c **** 	RCC_DeInit();
+  53              		.loc 1 27 2 view .LVU6
+  54 000a FFF7FEFF 		bl	RCC_DeInit
+  55              	.LVL2:
+  28:Core/Src/main.c **** 	RCC_HSEConfig(RCC_HSE_ON);
+  56              		.loc 1 28 2 view .LVU7
+  57 000e 0120     		movs	r0, #1
+  58 0010 FFF7FEFF 		bl	RCC_HSEConfig
+  59              	.LVL3:
+  29:Core/Src/main.c **** 	HSEStartUpStatus=RCC_WaitForHSEStartUp();
+  60              		.loc 1 29 2 view .LVU8
+  61              		.loc 1 29 19 is_stmt 0 view .LVU9
+  62 0014 FFF7FEFF 		bl	RCC_WaitForHSEStartUp
+  63              	.LVL4:
+  64 0018 0646     		mov	r6, r0
+  65              	.LVL5:
+  30:Core/Src/main.c **** 	while(HSEStartUpStatus == ERROR && wait_count)
+  66              		.loc 1 30 2 is_stmt 1 view .LVU10
+  19:Core/Src/main.c **** 
+  67              		.loc 1 19 11 is_stmt 0 view .LVU11
+  68 001a 0524     		movs	r4, #5
+  69              	.LVL6:
+  70              	.L3:
+  71              		.loc 1 30 7 is_stmt 1 view .LVU12
+  72 001c A6B9     		cbnz	r6, .L4
+  73              		.loc 1 30 34 is_stmt 0 discriminator 1 view .LVU13
+  74 001e 9CB1     		cbz	r4, .L4
+  31:Core/Src/main.c **** 	{
+  32:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_ON);
+  75              		.loc 1 32 3 is_stmt 1 view .LVU14
+  76 0020 0021     		movs	r1, #0
+  77 0022 2846     		mov	r0, r5
+  78 0024 FFF7FEFF 		bl	LED_Switch
+  79              	.LVL7:
+  33:Core/Src/main.c **** 		delay_ms(50);
+  80              		.loc 1 33 3 view .LVU15
+ARM GAS  /tmp/ccLf2xvP.s 			page 3
+
+
+  81 0028 3220     		movs	r0, #50
+  82 002a FFF7FEFF 		bl	delay_ms
+  83              	.LVL8:
+  34:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_OFF);
+  84              		.loc 1 34 3 view .LVU16
+  85 002e 0121     		movs	r1, #1
+  86 0030 2846     		mov	r0, r5
+  87 0032 FFF7FEFF 		bl	LED_Switch
+  88              	.LVL9:
+  35:Core/Src/main.c **** 		delay_ms(50);
+  89              		.loc 1 35 3 view .LVU17
+  90 0036 3220     		movs	r0, #50
+  91 0038 FFF7FEFF 		bl	delay_ms
+  92              	.LVL10:
+  36:Core/Src/main.c **** 		if (!(--wait_count)) return -1;
+  93              		.loc 1 36 3 view .LVU18
+  94              		.loc 1 36 6 is_stmt 0 view .LVU19
+  95 003c 013C     		subs	r4, r4, #1
+  96              	.LVL11:
+  97              		.loc 1 36 6 view .LVU20
+  98 003e EDD1     		bne	.L3
+  99              		.loc 1 36 31 view .LVU21
+ 100 0040 4FF0FF30 		mov	r0, #-1
+ 101              	.L1:
+  37:Core/Src/main.c **** 	}
+  38:Core/Src/main.c **** 	wait_count += 10;
+  39:Core/Src/main.c **** 	RCC_HCLKConfig(RCC_SYSCLK_Div1);    //(HCLK=SYSCLK)=168MHz
+  40:Core/Src/main.c **** 	RCC_PCLK1Config(RCC_HCLK_Div4);     //(PCLK1=SYSCLK/4)=42MHz
+  41:Core/Src/main.c **** 	RCC_PCLK2Config(RCC_HCLK_Div2);     //(PCLK2=SYSCLK/2)=84MHz
+  42:Core/Src/main.c **** 	RCC_PLLConfig(RCC_PLLSource_HSE,PLL_M ,PLL_N ,PLL_P,PLL_Q);
+  43:Core/Src/main.c **** 	RCC_PLLCmd(ENABLE); 
+  44:Core/Src/main.c **** 	while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET && wait_count)
+  45:Core/Src/main.c **** 	{
+  46:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_ON);
+  47:Core/Src/main.c **** 		delay_ms(100);
+  48:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_OFF);
+  49:Core/Src/main.c **** 		delay_ms(100);
+  50:Core/Src/main.c **** 		if (!(--wait_count)) return -1;
+  51:Core/Src/main.c **** 	}
+  52:Core/Src/main.c **** 	wait_count += 15;
+  53:Core/Src/main.c **** 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+  54:Core/Src/main.c **** 	while(RCC_GetSYSCLKSource() != 0x08 && wait_count)
+  55:Core/Src/main.c **** 	{
+  56:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_ON);
+  57:Core/Src/main.c **** 		delay_ms(100);
+  58:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_OFF);
+  59:Core/Src/main.c **** 		delay_ms(100);
+  60:Core/Src/main.c **** 		if (!(--wait_count)) return -1;
+  61:Core/Src/main.c **** 	}
+  62:Core/Src/main.c **** 	
+  63:Core/Src/main.c **** 	RCC_HSICmd(DISABLE);
+  64:Core/Src/main.c **** 	LED_Switch(Signal_LED, SW_ON);
+  65:Core/Src/main.c **** 	return 0;
+  66:Core/Src/main.c **** }
+ 102              		.loc 1 66 1 view .LVU22
+ 103 0044 02B0     		add	sp, sp, #8
+ 104              	.LCFI2:
+ARM GAS  /tmp/ccLf2xvP.s 			page 4
+
+
+ 105              		.cfi_remember_state
+ 106              		.cfi_def_cfa_offset 16
+ 107              		@ sp needed
+ 108 0046 70BD     		pop	{r4, r5, r6, pc}
+ 109              	.LVL12:
+ 110              	.L4:
+ 111              	.LCFI3:
+ 112              		.cfi_restore_state
+  38:Core/Src/main.c **** 	RCC_HCLKConfig(RCC_SYSCLK_Div1);    //(HCLK=SYSCLK)=168MHz
+ 113              		.loc 1 38 2 is_stmt 1 view .LVU23
+  38:Core/Src/main.c **** 	RCC_HCLKConfig(RCC_SYSCLK_Div1);    //(HCLK=SYSCLK)=168MHz
+ 114              		.loc 1 38 13 is_stmt 0 view .LVU24
+ 115 0048 0A34     		adds	r4, r4, #10
+ 116              	.LVL13:
+  39:Core/Src/main.c **** 	RCC_PCLK1Config(RCC_HCLK_Div4);     //(PCLK1=SYSCLK/4)=42MHz
+ 117              		.loc 1 39 2 is_stmt 1 view .LVU25
+ 118 004a 0020     		movs	r0, #0
+ 119 004c FFF7FEFF 		bl	RCC_HCLKConfig
+ 120              	.LVL14:
+  40:Core/Src/main.c **** 	RCC_PCLK2Config(RCC_HCLK_Div2);     //(PCLK2=SYSCLK/2)=84MHz
+ 121              		.loc 1 40 2 view .LVU26
+ 122 0050 4FF4A050 		mov	r0, #5120
+ 123 0054 FFF7FEFF 		bl	RCC_PCLK1Config
+ 124              	.LVL15:
+  41:Core/Src/main.c **** 	RCC_PLLConfig(RCC_PLLSource_HSE,PLL_M ,PLL_N ,PLL_P,PLL_Q);
+ 125              		.loc 1 41 2 view .LVU27
+ 126 0058 4FF48050 		mov	r0, #4096
+ 127 005c FFF7FEFF 		bl	RCC_PCLK2Config
+ 128              	.LVL16:
+  42:Core/Src/main.c **** 	RCC_PLLCmd(ENABLE); 
+ 129              		.loc 1 42 2 view .LVU28
+ 130 0060 0723     		movs	r3, #7
+ 131 0062 0093     		str	r3, [sp]
+ 132 0064 0223     		movs	r3, #2
+ 133 0066 4FF4A872 		mov	r2, #336
+ 134 006a 0821     		movs	r1, #8
+ 135 006c 4FF48000 		mov	r0, #4194304
+ 136 0070 FFF7FEFF 		bl	RCC_PLLConfig
+ 137              	.LVL17:
+  43:Core/Src/main.c **** 	while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET && wait_count)
+ 138              		.loc 1 43 2 view .LVU29
+ 139 0074 0120     		movs	r0, #1
+ 140 0076 FFF7FEFF 		bl	RCC_PLLCmd
+ 141              	.LVL18:
+  44:Core/Src/main.c **** 	{
+ 142              		.loc 1 44 2 view .LVU30
+ 143              	.L6:
+  44:Core/Src/main.c **** 	{
+ 144              		.loc 1 44 7 view .LVU31
+  44:Core/Src/main.c **** 	{
+ 145              		.loc 1 44 8 is_stmt 0 view .LVU32
+ 146 007a 3920     		movs	r0, #57
+ 147 007c FFF7FEFF 		bl	RCC_GetFlagStatus
+ 148              	.LVL19:
+  44:Core/Src/main.c **** 	{
+ 149              		.loc 1 44 7 view .LVU33
+ 150 0080 98B9     		cbnz	r0, .L7
+ARM GAS  /tmp/ccLf2xvP.s 			page 5
+
+
+  44:Core/Src/main.c **** 	{
+ 151              		.loc 1 44 52 discriminator 1 view .LVU34
+ 152 0082 94B1     		cbz	r4, .L7
+  46:Core/Src/main.c **** 		delay_ms(100);
+ 153              		.loc 1 46 3 is_stmt 1 view .LVU35
+ 154 0084 0021     		movs	r1, #0
+ 155 0086 2846     		mov	r0, r5
+ 156 0088 FFF7FEFF 		bl	LED_Switch
+ 157              	.LVL20:
+  47:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_OFF);
+ 158              		.loc 1 47 3 view .LVU36
+ 159 008c 6420     		movs	r0, #100
+ 160 008e FFF7FEFF 		bl	delay_ms
+ 161              	.LVL21:
+  48:Core/Src/main.c **** 		delay_ms(100);
+ 162              		.loc 1 48 3 view .LVU37
+ 163 0092 0121     		movs	r1, #1
+ 164 0094 2846     		mov	r0, r5
+ 165 0096 FFF7FEFF 		bl	LED_Switch
+ 166              	.LVL22:
+  49:Core/Src/main.c **** 		if (!(--wait_count)) return -1;
+ 167              		.loc 1 49 3 view .LVU38
+ 168 009a 6420     		movs	r0, #100
+ 169 009c FFF7FEFF 		bl	delay_ms
+ 170              	.LVL23:
+  50:Core/Src/main.c **** 	}
+ 171              		.loc 1 50 3 view .LVU39
+  50:Core/Src/main.c **** 	}
+ 172              		.loc 1 50 6 is_stmt 0 view .LVU40
+ 173 00a0 013C     		subs	r4, r4, #1
+ 174              	.LVL24:
+  50:Core/Src/main.c **** 	}
+ 175              		.loc 1 50 6 view .LVU41
+ 176 00a2 EAD1     		bne	.L6
+  50:Core/Src/main.c **** 	}
+ 177              		.loc 1 50 31 view .LVU42
+ 178 00a4 4FF0FF30 		mov	r0, #-1
+ 179 00a8 CCE7     		b	.L1
+ 180              	.L7:
+  52:Core/Src/main.c **** 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+ 181              		.loc 1 52 2 is_stmt 1 view .LVU43
+  52:Core/Src/main.c **** 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+ 182              		.loc 1 52 13 is_stmt 0 view .LVU44
+ 183 00aa 0F34     		adds	r4, r4, #15
+ 184              	.LVL25:
+  53:Core/Src/main.c **** 	while(RCC_GetSYSCLKSource() != 0x08 && wait_count)
+ 185              		.loc 1 53 2 is_stmt 1 view .LVU45
+ 186 00ac 0220     		movs	r0, #2
+ 187 00ae FFF7FEFF 		bl	RCC_SYSCLKConfig
+ 188              	.LVL26:
+  54:Core/Src/main.c **** 	{
+ 189              		.loc 1 54 2 view .LVU46
+ 190              	.L9:
+  54:Core/Src/main.c **** 	{
+ 191              		.loc 1 54 7 view .LVU47
+  54:Core/Src/main.c **** 	{
+ 192              		.loc 1 54 8 is_stmt 0 view .LVU48
+ARM GAS  /tmp/ccLf2xvP.s 			page 6
+
+
+ 193 00b2 FFF7FEFF 		bl	RCC_GetSYSCLKSource
+ 194              	.LVL27:
+  54:Core/Src/main.c **** 	{
+ 195              		.loc 1 54 7 view .LVU49
+ 196 00b6 0828     		cmp	r0, #8
+ 197 00b8 13D0     		beq	.L10
+  54:Core/Src/main.c **** 	{
+ 198              		.loc 1 54 38 discriminator 1 view .LVU50
+ 199 00ba 94B1     		cbz	r4, .L10
+  56:Core/Src/main.c **** 		delay_ms(100);
+ 200              		.loc 1 56 3 is_stmt 1 view .LVU51
+ 201 00bc 0021     		movs	r1, #0
+ 202 00be 2846     		mov	r0, r5
+ 203 00c0 FFF7FEFF 		bl	LED_Switch
+ 204              	.LVL28:
+  57:Core/Src/main.c **** 		LED_Switch(Signal_LED, SW_OFF);
+ 205              		.loc 1 57 3 view .LVU52
+ 206 00c4 6420     		movs	r0, #100
+ 207 00c6 FFF7FEFF 		bl	delay_ms
+ 208              	.LVL29:
+  58:Core/Src/main.c **** 		delay_ms(100);
+ 209              		.loc 1 58 3 view .LVU53
+ 210 00ca 0121     		movs	r1, #1
+ 211 00cc 2846     		mov	r0, r5
+ 212 00ce FFF7FEFF 		bl	LED_Switch
+ 213              	.LVL30:
+  59:Core/Src/main.c **** 		if (!(--wait_count)) return -1;
+ 214              		.loc 1 59 3 view .LVU54
+ 215 00d2 6420     		movs	r0, #100
+ 216 00d4 FFF7FEFF 		bl	delay_ms
+ 217              	.LVL31:
+  60:Core/Src/main.c **** 	}
+ 218              		.loc 1 60 3 view .LVU55
+  60:Core/Src/main.c **** 	}
+ 219              		.loc 1 60 6 is_stmt 0 view .LVU56
+ 220 00d8 013C     		subs	r4, r4, #1
+ 221              	.LVL32:
+  60:Core/Src/main.c **** 	}
+ 222              		.loc 1 60 6 view .LVU57
+ 223 00da EAD1     		bne	.L9
+  60:Core/Src/main.c **** 	}
+ 224              		.loc 1 60 31 view .LVU58
+ 225 00dc 4FF0FF30 		mov	r0, #-1
+ 226 00e0 B0E7     		b	.L1
+ 227              	.L10:
+  63:Core/Src/main.c **** 	LED_Switch(Signal_LED, SW_ON);
+ 228              		.loc 1 63 2 is_stmt 1 view .LVU59
+ 229 00e2 0020     		movs	r0, #0
+ 230 00e4 FFF7FEFF 		bl	RCC_HSICmd
+ 231              	.LVL33:
+  64:Core/Src/main.c **** 	return 0;
+ 232              		.loc 1 64 2 view .LVU60
+ 233 00e8 0021     		movs	r1, #0
+ 234 00ea 2846     		mov	r0, r5
+ 235 00ec FFF7FEFF 		bl	LED_Switch
+ 236              	.LVL34:
+  65:Core/Src/main.c **** }
+ARM GAS  /tmp/ccLf2xvP.s 			page 7
+
+
+ 237              		.loc 1 65 2 view .LVU61
+  65:Core/Src/main.c **** }
+ 238              		.loc 1 65 9 is_stmt 0 view .LVU62
+ 239 00f0 0020     		movs	r0, #0
+ 240 00f2 A7E7     		b	.L1
+ 241              	.LVL35:
+ 242              	.L12:
+ 243              	.LCFI4:
+ 244              		.cfi_def_cfa_offset 0
+ 245              		.cfi_restore 4
+ 246              		.cfi_restore 5
+ 247              		.cfi_restore 6
+ 248              		.cfi_restore 14
+  18:Core/Src/main.c **** 	unsigned wait_count = 5;
+ 249              		.loc 1 18 26 view .LVU63
+ 250 00f4 4FF0FF30 		mov	r0, #-1
+ 251              	.LVL36:
+ 252              		.loc 1 66 1 view .LVU64
+ 253 00f8 7047     		bx	lr
+ 254              		.cfi_endproc
+ 255              	.LFE126:
+ 257              		.section	.text.Startup_BOARD,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	Startup_BOARD
+ 260              		.syntax unified
+ 261              		.thumb
+ 262              		.thumb_func
+ 263              		.fpu fpv4-sp-d16
+ 265              	Startup_BOARD:
+ 266              	.LFB127:
+  67:Core/Src/main.c **** 
+  68:Core/Src/main.c **** void Startup_BOARD(void)
+  69:Core/Src/main.c **** {
+ 267              		.loc 1 69 1 is_stmt 1 view -0
+ 268              		.cfi_startproc
+ 269              		@ args = 0, pretend = 0, frame = 0
+ 270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 271 0000 08B5     		push	{r3, lr}
+ 272              	.LCFI5:
+ 273              		.cfi_def_cfa_offset 8
+ 274              		.cfi_offset 3, -8
+ 275              		.cfi_offset 14, -4
+  70:Core/Src/main.c **** 	DWT_Init();
+ 276              		.loc 1 70 2 view .LVU66
+ 277 0002 FFF7FEFF 		bl	DWT_Init
+ 278              	.LVL37:
+  71:Core/Src/main.c **** 	Signal_LEDs_Init();
+ 279              		.loc 1 71 2 view .LVU67
+ 280 0006 FFF7FEFF 		bl	Signal_LEDs_Init
+ 281              	.LVL38:
+  72:Core/Src/main.c **** 	HSE_168MHz(SIGNAL_LED_1);
+ 282              		.loc 1 72 2 view .LVU68
+ 283 000a 0120     		movs	r0, #1
+ 284 000c FFF7FEFF 		bl	HSE_168MHz
+ 285              	.LVL39:
+  73:Core/Src/main.c **** }
+ 286              		.loc 1 73 1 is_stmt 0 view .LVU69
+ARM GAS  /tmp/ccLf2xvP.s 			page 8
+
+
+ 287 0010 08BD     		pop	{r3, pc}
+ 288              		.cfi_endproc
+ 289              	.LFE127:
+ 291              		.section	.text.main,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	main
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 297              		.fpu fpv4-sp-d16
+ 299              	main:
+ 300              	.LFB128:
+  74:Core/Src/main.c **** 
+  75:Core/Src/main.c **** int main(void)
+  76:Core/Src/main.c **** {
+ 301              		.loc 1 76 1 is_stmt 1 view -0
+ 302              		.cfi_startproc
+ 303              		@ Volatile: function does not return.
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306 0000 08B5     		push	{r3, lr}
+ 307              	.LCFI6:
+ 308              		.cfi_def_cfa_offset 8
+ 309              		.cfi_offset 3, -8
+ 310              		.cfi_offset 14, -4
+  77:Core/Src/main.c **** 	Startup_BOARD();
+ 311              		.loc 1 77 2 view .LVU71
+ 312 0002 FFF7FEFF 		bl	Startup_BOARD
+ 313              	.LVL40:
+ 314              	.L23:
+  78:Core/Src/main.c **** 
+  79:Core/Src/main.c **** 	while(1)
+ 315              		.loc 1 79 2 discriminator 1 view .LVU72
+  80:Core/Src/main.c **** 	{
+  81:Core/Src/main.c **** 	}
+ 316              		.loc 1 81 2 discriminator 1 view .LVU73
+  79:Core/Src/main.c **** 	{
+ 317              		.loc 1 79 7 discriminator 1 view .LVU74
+ 318 0006 FEE7     		b	.L23
+ 319              		.cfi_endproc
+ 320              	.LFE128:
+ 322              		.text
+ 323              	.Letext0:
+ 324              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 325              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 326              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 327              		.file 5 "libs/inc/delay.h"
+ 328              		.file 6 "libs/inc/signal_led.h"
+ 329              		.file 7 "SPL/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccLf2xvP.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccLf2xvP.s:18     .text.HSE_168MHz:0000000000000000 $t
+     /tmp/ccLf2xvP.s:26     .text.HSE_168MHz:0000000000000000 HSE_168MHz
+     /tmp/ccLf2xvP.s:258    .text.Startup_BOARD:0000000000000000 $t
+     /tmp/ccLf2xvP.s:265    .text.Startup_BOARD:0000000000000000 Startup_BOARD
+     /tmp/ccLf2xvP.s:292    .text.main:0000000000000000 $t
+     /tmp/ccLf2xvP.s:299    .text.main:0000000000000000 main
+
+UNDEFINED SYMBOLS
+RCC_DeInit
+RCC_HSEConfig
+RCC_WaitForHSEStartUp
+LED_Switch
+delay_ms
+RCC_HCLKConfig
+RCC_PCLK1Config
+RCC_PCLK2Config
+RCC_PLLConfig
+RCC_PLLCmd
+RCC_GetFlagStatus
+RCC_SYSCLKConfig
+RCC_GetSYSCLKSource
+RCC_HSICmd
+DWT_Init
+Signal_LEDs_Init

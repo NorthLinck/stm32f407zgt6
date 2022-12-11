@@ -1,0 +1,277 @@
+ARM GAS  /tmp/ccoQeOhz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"signal_led.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Signal_LEDs_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	Signal_LEDs_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	Signal_LEDs_Init:
+  27              	.LFB126:
+  28              		.file 1 "libs/src/signal_led.c"
+   1:libs/src/signal_led.c **** #include "stm32f4xx.h"
+   2:libs/src/signal_led.c **** #include "stm32f4xx_rcc.h"
+   3:libs/src/signal_led.c **** #include "stm32f4xx_gpio.h"
+   4:libs/src/signal_led.c **** 
+   5:libs/src/signal_led.c **** #include "signal_led.h"
+   6:libs/src/signal_led.c **** 
+   7:libs/src/signal_led.c **** void Signal_LEDs_Init(void)
+   8:libs/src/signal_led.c **** {
+  29              		.loc 1 8 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 82B0     		sub	sp, sp, #8
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 32
+   9:libs/src/signal_led.c **** 	GPIO_InitTypeDef gpio;
+  45              		.loc 1 9 2 view .LVU1
+  10:libs/src/signal_led.c **** 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+  46              		.loc 1 10 2 view .LVU2
+  47 0006 0121     		movs	r1, #1
+  48 0008 0820     		movs	r0, #8
+ARM GAS  /tmp/ccoQeOhz.s 			page 2
+
+
+  49 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  50              	.LVL0:
+  11:libs/src/signal_led.c **** 	gpio.GPIO_Mode  = GPIO_Mode_OUT;
+  51              		.loc 1 11 2 view .LVU3
+  52              		.loc 1 11 18 is_stmt 0 view .LVU4
+  53 000e 0124     		movs	r4, #1
+  54 0010 8DF80440 		strb	r4, [sp, #4]
+  12:libs/src/signal_led.c **** 	gpio.GPIO_OType = GPIO_OType_PP;
+  55              		.loc 1 12 2 is_stmt 1 view .LVU5
+  56              		.loc 1 12 18 is_stmt 0 view .LVU6
+  57 0014 4FF00008 		mov	r8, #0
+  58 0018 8DF80680 		strb	r8, [sp, #6]
+  13:libs/src/signal_led.c **** 	gpio.GPIO_Pin   = SIGNAL_LED_2;
+  59              		.loc 1 13 2 is_stmt 1 view .LVU7
+  60              		.loc 1 13 18 is_stmt 0 view .LVU8
+  61 001c 0827     		movs	r7, #8
+  62 001e 0097     		str	r7, [sp]
+  14:libs/src/signal_led.c **** 	gpio.GPIO_PuPd  = GPIO_PuPd_DOWN;
+  63              		.loc 1 14 2 is_stmt 1 view .LVU9
+  64              		.loc 1 14 18 is_stmt 0 view .LVU10
+  65 0020 0225     		movs	r5, #2
+  66 0022 8DF80750 		strb	r5, [sp, #7]
+  15:libs/src/signal_led.c **** 	gpio.GPIO_Speed = GPIO_Speed_50MHz;
+  67              		.loc 1 15 2 is_stmt 1 view .LVU11
+  68              		.loc 1 15 18 is_stmt 0 view .LVU12
+  69 0026 8DF80550 		strb	r5, [sp, #5]
+  16:libs/src/signal_led.c **** 	GPIO_Init(GPIOD, &gpio);
+  70              		.loc 1 16 2 is_stmt 1 view .LVU13
+  71 002a 114E     		ldr	r6, .L3
+  72 002c 6946     		mov	r1, sp
+  73 002e 3046     		mov	r0, r6
+  74 0030 FFF7FEFF 		bl	GPIO_Init
+  75              	.LVL1:
+  17:libs/src/signal_led.c **** 
+  18:libs/src/signal_led.c **** 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+  76              		.loc 1 18 2 view .LVU14
+  77 0034 2146     		mov	r1, r4
+  78 0036 0420     		movs	r0, #4
+  79 0038 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  80              	.LVL2:
+  19:libs/src/signal_led.c **** 	gpio.GPIO_Mode  = GPIO_Mode_OUT;
+  81              		.loc 1 19 2 view .LVU15
+  82              		.loc 1 19 18 is_stmt 0 view .LVU16
+  83 003c 8DF80440 		strb	r4, [sp, #4]
+  20:libs/src/signal_led.c **** 	gpio.GPIO_OType = GPIO_OType_PP;
+  84              		.loc 1 20 2 is_stmt 1 view .LVU17
+  85              		.loc 1 20 18 is_stmt 0 view .LVU18
+  86 0040 8DF80680 		strb	r8, [sp, #6]
+  21:libs/src/signal_led.c **** 	gpio.GPIO_Pin   = SIGNAL_LED_1;
+  87              		.loc 1 21 2 is_stmt 1 view .LVU19
+  88              		.loc 1 21 18 is_stmt 0 view .LVU20
+  89 0044 0094     		str	r4, [sp]
+  22:libs/src/signal_led.c **** 	gpio.GPIO_PuPd  = GPIO_PuPd_DOWN;
+  90              		.loc 1 22 2 is_stmt 1 view .LVU21
+  91              		.loc 1 22 18 is_stmt 0 view .LVU22
+  92 0046 8DF80750 		strb	r5, [sp, #7]
+  23:libs/src/signal_led.c **** 	gpio.GPIO_Speed = GPIO_Speed_50MHz;
+ARM GAS  /tmp/ccoQeOhz.s 			page 3
+
+
+  93              		.loc 1 23 2 is_stmt 1 view .LVU23
+  94              		.loc 1 23 18 is_stmt 0 view .LVU24
+  95 004a 8DF80550 		strb	r5, [sp, #5]
+  24:libs/src/signal_led.c **** 	GPIO_Init(GPIOC, &gpio);
+  96              		.loc 1 24 2 is_stmt 1 view .LVU25
+  97 004e 094D     		ldr	r5, .L3+4
+  98 0050 6946     		mov	r1, sp
+  99 0052 2846     		mov	r0, r5
+ 100 0054 FFF7FEFF 		bl	GPIO_Init
+ 101              	.LVL3:
+  25:libs/src/signal_led.c **** 
+  26:libs/src/signal_led.c **** 	GPIO_SetBits(GPIOD, SIGNAL_LED_2);
+ 102              		.loc 1 26 2 view .LVU26
+ 103 0058 3946     		mov	r1, r7
+ 104 005a 3046     		mov	r0, r6
+ 105 005c FFF7FEFF 		bl	GPIO_SetBits
+ 106              	.LVL4:
+  27:libs/src/signal_led.c **** 	GPIO_SetBits(GPIOC, SIGNAL_LED_1);
+ 107              		.loc 1 27 2 view .LVU27
+ 108 0060 2146     		mov	r1, r4
+ 109 0062 2846     		mov	r0, r5
+ 110 0064 FFF7FEFF 		bl	GPIO_SetBits
+ 111              	.LVL5:
+  28:libs/src/signal_led.c **** }
+ 112              		.loc 1 28 1 is_stmt 0 view .LVU28
+ 113 0068 02B0     		add	sp, sp, #8
+ 114              	.LCFI2:
+ 115              		.cfi_def_cfa_offset 24
+ 116              		@ sp needed
+ 117 006a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 118              	.L4:
+ 119 006e 00BF     		.align	2
+ 120              	.L3:
+ 121 0070 000C0240 		.word	1073875968
+ 122 0074 00080240 		.word	1073874944
+ 123              		.cfi_endproc
+ 124              	.LFE126:
+ 126              		.section	.text.LED_Switch,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	LED_Switch
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.fpu fpv4-sp-d16
+ 134              	LED_Switch:
+ 135              	.LVL6:
+ 136              	.LFB127:
+  29:libs/src/signal_led.c **** 
+  30:libs/src/signal_led.c **** void LED_Switch(uint32_t Signal_LED, bool State)
+  31:libs/src/signal_led.c **** {
+ 137              		.loc 1 31 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		.loc 1 31 1 is_stmt 0 view .LVU30
+ 142 0000 08B5     		push	{r3, lr}
+ 143              	.LCFI3:
+ARM GAS  /tmp/ccoQeOhz.s 			page 4
+
+
+ 144              		.cfi_def_cfa_offset 8
+ 145              		.cfi_offset 3, -8
+ 146              		.cfi_offset 14, -4
+ 147 0002 0A46     		mov	r2, r1
+  32:libs/src/signal_led.c **** 	switch(Signal_LED) {
+ 148              		.loc 1 32 2 is_stmt 1 view .LVU31
+ 149 0004 0128     		cmp	r0, #1
+ 150 0006 02D0     		beq	.L6
+ 151 0008 0828     		cmp	r0, #8
+ 152 000a 05D0     		beq	.L7
+ 153              	.LVL7:
+ 154              	.L5:
+  33:libs/src/signal_led.c **** 		case SIGNAL_LED_1:
+  34:libs/src/signal_led.c **** 			GPIO_WriteBit(GPIOC, SIGNAL_LED_1, State);
+  35:libs/src/signal_led.c **** 			break;
+  36:libs/src/signal_led.c **** 		case SIGNAL_LED_2:
+  37:libs/src/signal_led.c **** 			GPIO_WriteBit(GPIOD, SIGNAL_LED_2, State);
+  38:libs/src/signal_led.c **** 			break;
+  39:libs/src/signal_led.c **** 		default:
+  40:libs/src/signal_led.c **** 			break;
+  41:libs/src/signal_led.c **** 	};
+  42:libs/src/signal_led.c **** }
+ 155              		.loc 1 42 1 is_stmt 0 view .LVU32
+ 156 000c 08BD     		pop	{r3, pc}
+ 157              	.LVL8:
+ 158              	.L6:
+  34:libs/src/signal_led.c **** 			break;
+ 159              		.loc 1 34 4 is_stmt 1 view .LVU33
+ 160 000e 0121     		movs	r1, #1
+ 161              	.LVL9:
+  34:libs/src/signal_led.c **** 			break;
+ 162              		.loc 1 34 4 is_stmt 0 view .LVU34
+ 163 0010 0448     		ldr	r0, .L10
+ 164              	.LVL10:
+  34:libs/src/signal_led.c **** 			break;
+ 165              		.loc 1 34 4 view .LVU35
+ 166 0012 FFF7FEFF 		bl	GPIO_WriteBit
+ 167              	.LVL11:
+  35:libs/src/signal_led.c **** 		case SIGNAL_LED_2:
+ 168              		.loc 1 35 4 is_stmt 1 view .LVU36
+ 169 0016 F9E7     		b	.L5
+ 170              	.LVL12:
+ 171              	.L7:
+  37:libs/src/signal_led.c **** 			break;
+ 172              		.loc 1 37 4 view .LVU37
+ 173 0018 0821     		movs	r1, #8
+ 174              	.LVL13:
+  37:libs/src/signal_led.c **** 			break;
+ 175              		.loc 1 37 4 is_stmt 0 view .LVU38
+ 176 001a 0348     		ldr	r0, .L10+4
+ 177              	.LVL14:
+  37:libs/src/signal_led.c **** 			break;
+ 178              		.loc 1 37 4 view .LVU39
+ 179 001c FFF7FEFF 		bl	GPIO_WriteBit
+ 180              	.LVL15:
+  38:libs/src/signal_led.c **** 		default:
+ 181              		.loc 1 38 4 is_stmt 1 view .LVU40
+ARM GAS  /tmp/ccoQeOhz.s 			page 5
+
+
+  41:libs/src/signal_led.c **** }
+ 182              		.loc 1 41 3 view .LVU41
+ 183              		.loc 1 42 1 is_stmt 0 view .LVU42
+ 184 0020 F4E7     		b	.L5
+ 185              	.L11:
+ 186 0022 00BF     		.align	2
+ 187              	.L10:
+ 188 0024 00080240 		.word	1073874944
+ 189 0028 000C0240 		.word	1073875968
+ 190              		.cfi_endproc
+ 191              	.LFE127:
+ 193              		.text
+ 194              	.Letext0:
+ 195              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 196              		.file 3 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 197              		.file 4 "SPL/inc/stm32f4xx_gpio.h"
+ 198              		.file 5 "SPL/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccoQeOhz.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 signal_led.c
+     /tmp/ccoQeOhz.s:18     .text.Signal_LEDs_Init:0000000000000000 $t
+     /tmp/ccoQeOhz.s:26     .text.Signal_LEDs_Init:0000000000000000 Signal_LEDs_Init
+     /tmp/ccoQeOhz.s:121    .text.Signal_LEDs_Init:0000000000000070 $d
+     /tmp/ccoQeOhz.s:127    .text.LED_Switch:0000000000000000 $t
+     /tmp/ccoQeOhz.s:134    .text.LED_Switch:0000000000000000 LED_Switch
+     /tmp/ccoQeOhz.s:188    .text.LED_Switch:0000000000000024 $d
+
+UNDEFINED SYMBOLS
+RCC_AHB1PeriphClockCmd
+GPIO_Init
+GPIO_SetBits
+GPIO_WriteBit

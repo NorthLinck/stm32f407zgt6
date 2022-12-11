@@ -1,0 +1,260 @@
+ARM GAS  /tmp/cckXAck1.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"delay.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.DWT_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	DWT_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	DWT_Init:
+  27              	.LFB123:
+  28              		.file 1 "libs/src/delay.c"
+   1:libs/src/delay.c **** #include "delay.h"
+   2:libs/src/delay.c **** #include "stm32f4xx.h"
+   3:libs/src/delay.c **** 
+   4:libs/src/delay.c **** #define    DWT_CYCCNT    *(volatile unsigned long *)0xE0001004
+   5:libs/src/delay.c **** #define    DWT_CONTROL   *(volatile unsigned long *)0xE0001000
+   6:libs/src/delay.c **** #define    SCB_DEMCR     *(volatile unsigned long *)0xE000EDFC
+   7:libs/src/delay.c **** void DWT_Init(void)
+   8:libs/src/delay.c **** {
+  29              		.loc 1 8 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   9:libs/src/delay.c **** 	// разрешаем использовать счётчик
+  10:libs/src/delay.c **** 	SCB_DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+  34              		.loc 1 10 2 view .LVU1
+  35              		.loc 1 10 12 is_stmt 0 view .LVU2
+  36 0000 4FF0E022 		mov	r2, #-536813568
+  37 0004 D2F8FC3D 		ldr	r3, [r2, #3580]
+  38 0008 43F08073 		orr	r3, r3, #16777216
+  39 000c C2F8FC3D 		str	r3, [r2, #3580]
+  11:libs/src/delay.c **** 	// обнуляем значение счётного регистра
+  12:libs/src/delay.c **** 	DWT_CYCCNT  = 0;
+  40              		.loc 1 12 2 is_stmt 1 view .LVU3
+  41              		.loc 1 12 14 is_stmt 0 view .LVU4
+  42 0010 034B     		ldr	r3, .L2
+  43 0012 0022     		movs	r2, #0
+  44 0014 5A60     		str	r2, [r3, #4]
+  13:libs/src/delay.c **** 	// запускаем счётчик
+  14:libs/src/delay.c **** 	DWT_CONTROL |= DWT_CTRL_CYCCNTENA_Msk; 
+ARM GAS  /tmp/cckXAck1.s 			page 2
+
+
+  45              		.loc 1 14 2 is_stmt 1 view .LVU5
+  46              		.loc 1 14 14 is_stmt 0 view .LVU6
+  47 0016 1A68     		ldr	r2, [r3]
+  48 0018 42F00102 		orr	r2, r2, #1
+  49 001c 1A60     		str	r2, [r3]
+  15:libs/src/delay.c **** }
+  50              		.loc 1 15 1 view .LVU7
+  51 001e 7047     		bx	lr
+  52              	.L3:
+  53              		.align	2
+  54              	.L2:
+  55 0020 001000E0 		.word	-536866816
+  56              		.cfi_endproc
+  57              	.LFE123:
+  59              		.section	.text.delay_us,"ax",%progbits
+  60              		.align	1
+  61              		.global	delay_us
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  65              		.fpu fpv4-sp-d16
+  67              	delay_us:
+  68              	.LVL0:
+  69              	.LFB125:
+  16:libs/src/delay.c **** static __inline uint32_t delta(uint32_t t0, uint32_t t1)
+  17:libs/src/delay.c **** {
+  18:libs/src/delay.c **** 	return (t1 - t0); 
+  19:libs/src/delay.c **** }
+  20:libs/src/delay.c **** void delay_us(uint32_t us)
+  21:libs/src/delay.c **** {
+  70              		.loc 1 21 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  22:libs/src/delay.c **** 	uint32_t t0 =  DWT->CYCCNT;
+  75              		.loc 1 22 2 view .LVU9
+  76              		.loc 1 22 11 is_stmt 0 view .LVU10
+  77 0000 074B     		ldr	r3, .L6
+  78 0002 5A68     		ldr	r2, [r3, #4]
+  79              	.LVL1:
+  23:libs/src/delay.c **** 	uint32_t us_count_tic =  us * (SystemCoreClock/1000000);
+  80              		.loc 1 23 2 is_stmt 1 view .LVU11
+  81              		.loc 1 23 48 is_stmt 0 view .LVU12
+  82 0004 074B     		ldr	r3, .L6+4
+  83 0006 1B68     		ldr	r3, [r3]
+  84 0008 0749     		ldr	r1, .L6+8
+  85 000a A1FB0313 		umull	r1, r3, r1, r3
+  86 000e 9B0C     		lsrs	r3, r3, #18
+  87              		.loc 1 23 11 view .LVU13
+  88 0010 03FB00F0 		mul	r0, r3, r0
+  89              	.LVL2:
+  24:libs/src/delay.c **** 	while (delta(t0, DWT->CYCCNT) < us_count_tic) ;
+  90              		.loc 1 24 2 is_stmt 1 view .LVU14
+  91              	.L5:
+  92              		.loc 1 24 48 discriminator 1 view .LVU15
+  93              		.loc 1 24 8 discriminator 1 view .LVU16
+ARM GAS  /tmp/cckXAck1.s 			page 3
+
+
+  94              		.loc 1 24 9 is_stmt 0 discriminator 1 view .LVU17
+  95 0014 024B     		ldr	r3, .L6
+  96 0016 5B68     		ldr	r3, [r3, #4]
+  97              	.LVL3:
+  98              	.LBB6:
+  99              	.LBI6:
+  16:libs/src/delay.c **** {
+ 100              		.loc 1 16 26 is_stmt 1 discriminator 1 view .LVU18
+ 101              	.LBB7:
+  18:libs/src/delay.c **** }
+ 102              		.loc 1 18 2 discriminator 1 view .LVU19
+  18:libs/src/delay.c **** }
+ 103              		.loc 1 18 13 is_stmt 0 discriminator 1 view .LVU20
+ 104 0018 9B1A     		subs	r3, r3, r2
+ 105              	.LVL4:
+  18:libs/src/delay.c **** }
+ 106              		.loc 1 18 13 discriminator 1 view .LVU21
+ 107              	.LBE7:
+ 108              	.LBE6:
+ 109              		.loc 1 24 8 discriminator 1 view .LVU22
+ 110 001a 9842     		cmp	r0, r3
+ 111 001c FAD8     		bhi	.L5
+  25:libs/src/delay.c **** }
+ 112              		.loc 1 25 1 view .LVU23
+ 113 001e 7047     		bx	lr
+ 114              	.L7:
+ 115              		.align	2
+ 116              	.L6:
+ 117 0020 001000E0 		.word	-536866816
+ 118 0024 00000000 		.word	SystemCoreClock
+ 119 0028 83DE1B43 		.word	1125899907
+ 120              		.cfi_endproc
+ 121              	.LFE125:
+ 123              		.section	.text.delay_ms,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	delay_ms
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu fpv4-sp-d16
+ 131              	delay_ms:
+ 132              	.LVL5:
+ 133              	.LFB126:
+  26:libs/src/delay.c **** void delay_ms(uint32_t ms)
+  27:libs/src/delay.c **** {
+ 134              		.loc 1 27 1 is_stmt 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              		@ link register save eliminated.
+  28:libs/src/delay.c **** 	uint32_t t0 =  DWT->CYCCNT;
+ 139              		.loc 1 28 2 view .LVU25
+ 140              		.loc 1 28 11 is_stmt 0 view .LVU26
+ 141 0000 094B     		ldr	r3, .L10
+ 142 0002 5A68     		ldr	r2, [r3, #4]
+ 143              	.LVL6:
+  29:libs/src/delay.c **** 	uint32_t us_count_tic =  ms * 1000 * (SystemCoreClock/1000000);
+ARM GAS  /tmp/cckXAck1.s 			page 4
+
+
+ 144              		.loc 1 29 2 is_stmt 1 view .LVU27
+ 145              		.loc 1 29 55 is_stmt 0 view .LVU28
+ 146 0004 094B     		ldr	r3, .L10+4
+ 147 0006 1B68     		ldr	r3, [r3]
+ 148 0008 0949     		ldr	r1, .L10+8
+ 149 000a A1FB0313 		umull	r1, r3, r1, r3
+ 150 000e 9B0C     		lsrs	r3, r3, #18
+ 151              		.loc 1 29 37 view .LVU29
+ 152 0010 03FB00F0 		mul	r0, r3, r0
+ 153              	.LVL7:
+ 154              		.loc 1 29 11 view .LVU30
+ 155 0014 4FF47A73 		mov	r3, #1000
+ 156 0018 03FB00F0 		mul	r0, r3, r0
+ 157              	.LVL8:
+  30:libs/src/delay.c **** 	while (delta(t0, DWT->CYCCNT) < us_count_tic) ;
+ 158              		.loc 1 30 2 is_stmt 1 view .LVU31
+ 159              	.L9:
+ 160              		.loc 1 30 48 discriminator 1 view .LVU32
+ 161              		.loc 1 30 8 discriminator 1 view .LVU33
+ 162              		.loc 1 30 9 is_stmt 0 discriminator 1 view .LVU34
+ 163 001c 024B     		ldr	r3, .L10
+ 164 001e 5B68     		ldr	r3, [r3, #4]
+ 165              	.LVL9:
+ 166              	.LBB8:
+ 167              	.LBI8:
+  16:libs/src/delay.c **** {
+ 168              		.loc 1 16 26 is_stmt 1 discriminator 1 view .LVU35
+ 169              	.LBB9:
+  18:libs/src/delay.c **** }
+ 170              		.loc 1 18 2 discriminator 1 view .LVU36
+  18:libs/src/delay.c **** }
+ 171              		.loc 1 18 13 is_stmt 0 discriminator 1 view .LVU37
+ 172 0020 9B1A     		subs	r3, r3, r2
+ 173              	.LVL10:
+  18:libs/src/delay.c **** }
+ 174              		.loc 1 18 13 discriminator 1 view .LVU38
+ 175              	.LBE9:
+ 176              	.LBE8:
+ 177              		.loc 1 30 8 discriminator 1 view .LVU39
+ 178 0022 9842     		cmp	r0, r3
+ 179 0024 FAD8     		bhi	.L9
+  31:libs/src/delay.c **** }
+ 180              		.loc 1 31 1 view .LVU40
+ 181 0026 7047     		bx	lr
+ 182              	.L11:
+ 183              		.align	2
+ 184              	.L10:
+ 185 0028 001000E0 		.word	-536866816
+ 186 002c 00000000 		.word	SystemCoreClock
+ 187 0030 83DE1B43 		.word	1125899907
+ 188              		.cfi_endproc
+ 189              	.LFE126:
+ 191              		.text
+ 192              	.Letext0:
+ 193              		.file 2 "Drivers/CMSIS/Include/core_cm4.h"
+ 194              		.file 3 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 195              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ARM GAS  /tmp/cckXAck1.s 			page 5
+
+
+ARM GAS  /tmp/cckXAck1.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 delay.c
+     /tmp/cckXAck1.s:18     .text.DWT_Init:0000000000000000 $t
+     /tmp/cckXAck1.s:26     .text.DWT_Init:0000000000000000 DWT_Init
+     /tmp/cckXAck1.s:55     .text.DWT_Init:0000000000000020 $d
+     /tmp/cckXAck1.s:60     .text.delay_us:0000000000000000 $t
+     /tmp/cckXAck1.s:67     .text.delay_us:0000000000000000 delay_us
+     /tmp/cckXAck1.s:117    .text.delay_us:0000000000000020 $d
+     /tmp/cckXAck1.s:124    .text.delay_ms:0000000000000000 $t
+     /tmp/cckXAck1.s:131    .text.delay_ms:0000000000000000 delay_ms
+     /tmp/cckXAck1.s:185    .text.delay_ms:0000000000000028 $d
+
+UNDEFINED SYMBOLS
+SystemCoreClock
